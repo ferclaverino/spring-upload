@@ -1,1 +1,3 @@
 <app-file-upload (fileSelected)="fileSelected($event)" />
+<div *ngIf="uploadSucceeded">upload completed!</div>
+<div *ngIf="uploadFailed">Sorry, can´t upload file</div>
