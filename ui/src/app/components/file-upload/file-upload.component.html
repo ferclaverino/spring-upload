@@ -1,0 +1,6 @@
+<input type="file" (change)="onFileSelected($vent)" #fileInput />
+
+<div>
+  {{ fileName || "No file uploaded yet." }}
+  <button (click)="fileInput.click()">upload</button>
+</div>
