@@ -3,6 +3,9 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { FileUploadService } from './services/file-upload.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
+import { HttpEvent } from '@angular/common/http';
+import { tap } from 'rxjs';
+import { UploadProcess, UploadStatus } from './model/upload-process';
 
 @Component({
   selector: 'app-root',
@@ -14,24 +17,31 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
   private readonly destroyRef = inject(DestroyRef);
 
-  uploadSucceeded = false;
-  uploadFailed = false;
+  readonly uploadProcess = new UploadProcess();
+  readonly UploadStatus = UploadStatus;
 
   constructor(private readonly fileUploadService: FileUploadService) {}
 
   fileSelected(file: File) {
     this.fileUploadService
       .upload(file)
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        tap(() => this.uploadProcess.start()),
+        takeUntilDestroyed(this.destroyRef),
+      )
       .subscribe({
-        next: () => {
-          this.uploadSucceeded = true;
+        next: (event: HttpEvent<void>) => {
+          this.updateProgress(event);
+          this.uploadProcess.success();
         },
         error: (error) => {
-          this.uploadFailed = true;
+          this.uploadProcess.fail();
           console.log(error);
         },
-        complete: () => {},
       });
+  }
+
+  private updateProgress(event: HttpEvent<void>) {
+    this.uploadProcess.updateProgress(event);
   }
 }
