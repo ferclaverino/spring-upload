@@ -12,7 +12,7 @@ export class FileUploadService {
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.http.post<void>('/api/thumbnail-upload', formData, {
+    return this.http.post<void>('/api/files/upload', formData, {
       reportProgress: true,
       observe: 'events',
     });

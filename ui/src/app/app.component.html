@@ -6,5 +6,5 @@
   upload completed!
 </div>
 <div *ngIf="uploadProcess.status === UploadStatus.FAILED">
-  Sorry, can´t upload file
+  Sorry, can´t upload file: {{ uploadProcess.errorMessage }}
 </div>

@@ -1,4 +1,8 @@
-import { HttpEvent, HttpEventType } from '@angular/common/http';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpEventType,
+} from '@angular/common/http';
 
 export enum UploadStatus {
   PENDING,
@@ -10,6 +14,7 @@ export enum UploadStatus {
 export class UploadProcess {
   private _status = UploadStatus.PENDING;
   private _progress = 0;
+  private _errorMessage = '';
 
   get status(): UploadStatus {
     return this._status;
@@ -17,6 +22,10 @@ export class UploadProcess {
 
   get progress(): number {
     return this._progress;
+  }
+
+  get errorMessage(): string {
+    return this._errorMessage;
   }
 
   start() {
@@ -28,8 +37,13 @@ export class UploadProcess {
     this._status = UploadStatus.SUCCEDED;
   }
 
-  fail() {
+  fail(errorResponse: HttpErrorResponse) {
     this._status = UploadStatus.FAILED;
+    if (errorResponse.error.detail) {
+      this._errorMessage = errorResponse.error.detail;
+    } else {
+      this._errorMessage = errorResponse.error;
+    }
   }
 
   updateProgress(event: HttpEvent<void>) {
