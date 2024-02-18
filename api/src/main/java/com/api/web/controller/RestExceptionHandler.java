@@ -9,15 +9,14 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.api.persistence.model.StorageException;
+import com.api.web.model.ErrorDTO;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler({ StorageException.class })
-  protected ResponseEntity<Object> handleInternalServerError(
-      StorageException ex, WebRequest request) {
-    return handleExceptionInternal(ex, ex.getMessage(),
-        new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+  protected ResponseEntity<Object> handleInternalServerError(RuntimeException ex, WebRequest request) {
+    return handleExceptionInternal(ex, new ErrorDTO(ex), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
   }
 
 }

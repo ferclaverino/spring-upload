@@ -41,6 +41,8 @@ export class UploadProcess {
     this._status = UploadStatus.FAILED;
     if (errorResponse.error.detail) {
       this._errorMessage = errorResponse.error.detail;
+    } else if (errorResponse.error.message) {
+      this._errorMessage = errorResponse.error.message;
     } else {
       this._errorMessage = errorResponse.error;
     }
