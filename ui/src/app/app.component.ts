@@ -3,7 +3,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { FileUploadService } from './services/file-upload.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { HttpEvent } from '@angular/common/http';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { tap } from 'rxjs';
 import { UploadProcess, UploadStatus } from './model/upload-process';
 
@@ -31,17 +31,16 @@ export class AppComponent {
       )
       .subscribe({
         next: (event: HttpEvent<void>) => {
-          this.updateProgress(event);
-          this.uploadProcess.success();
+          if (event.type == HttpEventType.UploadProgress) {
+            this.uploadProcess.updateProgress(event);
+          } else {
+            this.uploadProcess.success();
+          }
         },
         error: (error) => {
           this.uploadProcess.fail();
           console.log(error);
         },
       });
-  }
-
-  private updateProgress(event: HttpEvent<void>) {
-    this.uploadProcess.updateProgress(event);
   }
 }

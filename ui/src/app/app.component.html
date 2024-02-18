@@ -1,9 +1,10 @@
 <app-file-upload (fileSelected)="fileSelected($event)" />
-{{ uploadProcess.status }}
-{{ uploadProcess.progress }}
-<div *ngIf="uploadProcess.status === UploadStatus.SUCCESS">
+<div *ngIf="uploadProcess.status === UploadStatus.UPLOADING">
+  {{ uploadProcess.progress }}
+</div>
+<div *ngIf="uploadProcess.status === UploadStatus.SUCCEDED">
   upload completed!
 </div>
-<div *ngIf="uploadProcess.status === UploadStatus.FAIL">
+<div *ngIf="uploadProcess.status === UploadStatus.FAILED">
   Sorry, can´t upload file
 </div>
