@@ -26,7 +26,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler({ Exception.class })
   public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
-    return handleExceptionInternal(ex, new ErrorDTO("Sorry, we are having unexpected issues"), new HttpHeaders(),
+    return handleExceptionInternal(ex, new ErrorDTO("We are having unexpected issues"), new HttpHeaders(),
         HttpStatus.INTERNAL_SERVER_ERROR, request);
   }
 
