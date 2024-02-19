@@ -17,7 +17,8 @@ import com.api.persistence.model.StorageException;
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-  Logger logger = LoggerFactory.getLogger(ApiExceptionHandler.class);
+  private static final String EXCEPTION_MESSAGE = "An exception occured, which will cause a {} response";
+  private Logger logger = LoggerFactory.getLogger(ApiExceptionHandler.class);
 
   @ExceptionHandler({ StorageException.class })
   protected ResponseEntity<Object> handleInternalServerError(StorageException ex, WebRequest request) {
@@ -34,13 +35,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @Override
   protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers,
       HttpStatusCode statusCode, WebRequest request) {
-    // Log handled erros, so there is more information for diagnosis
+    // Log handled errors, so there is more information for diagnosis
     if (statusCode.is5xxServerError()) {
-      logger.error("An exception occured, which will cause a {} response", statusCode, ex);
+      logger.error(EXCEPTION_MESSAGE, statusCode, ex);
     } else if (statusCode.is4xxClientError()) {
-      logger.warn("An exception occured, which will cause a {} response", statusCode, ex);
-    } else {
-      logger.warn("An exception occured, which will cause a {} response", statusCode, ex);
+      logger.warn(EXCEPTION_MESSAGE, statusCode, ex);
     }
     return super.handleExceptionInternal(ex, body, headers, statusCode, request);
   }

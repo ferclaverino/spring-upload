@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.api.persistence.storage.FileStorage;
+import com.api.service.AuthenticationService;
 import com.api.service.FileService;
 
 @Service
@@ -19,8 +20,13 @@ public class FileServiceImplementation implements FileService {
   @Autowired
   private FileStorage fileStorage;
 
+  @Autowired
+  private AuthenticationService authenticationService;
+
   @Override
   public void save(MultipartFile file) {
+    // Log when upload starts, finish and finish with error to understood what is
+    // going on with uploads
     this.logInfo("starts", file);
     try {
       this.fileStorage.save(file);
@@ -32,11 +38,14 @@ public class FileServiceImplementation implements FileService {
   }
 
   private void logInfo(String action, MultipartFile file) {
-    logger.info("User {} file upload: '{}' (size: {} kb).", action, file.getOriginalFilename(), file.getSize() / 1024);
+    String username = authenticationService.getAuthentication().getName();
+    logger.info("User '{}' {} file upload: '{}' (size: {} kb).", username, action, file.getOriginalFilename(),
+        file.getSize() / 1024);
   }
 
   private void logInfo(String action, MultipartFile file, RuntimeException exception) {
-    logger.info("User {} file upload with error: '{}', file upload: '{}' (size: {} kb).", action,
+    String username = authenticationService.getAuthentication().getName();
+    logger.info("User '{}' {} file upload with error: '{}', file upload: '{}' (size: {} kb).", username, action,
         exception.getMessage(),
         file.getOriginalFilename(), file.getSize() / 1024);
   }
