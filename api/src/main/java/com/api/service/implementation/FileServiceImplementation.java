@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.api.persistence.storage.FileStorage;
 import com.api.service.FileService;
-import com.api.web.controller.ApiExceptionHandler;
+import com.api.web.exception.ApiExceptionHandler;
 
 @Service
 @Profile("!unsupported-exception")

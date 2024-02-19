@@ -43,8 +43,6 @@ export class UploadProcess {
       this._errorMessage = errorResponse.error.detail;
     } else if (errorResponse.error.message) {
       this._errorMessage = errorResponse.error.message;
-    } else if (errorResponse.error.error) {
-      this._errorMessage = errorResponse.error.error;
     } else {
       this._errorMessage = errorResponse.error;
     }

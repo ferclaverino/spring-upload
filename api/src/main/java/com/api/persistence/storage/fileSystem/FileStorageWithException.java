@@ -9,7 +9,7 @@ import com.api.persistence.storage.FileStorage;
 
 @Component
 @Profile("storage-exception")
-public class FileStorageException implements FileStorage {
+public class FileStorageWithException implements FileStorage {
 
 	@Override
 	public void save(MultipartFile file) throws StorageException {

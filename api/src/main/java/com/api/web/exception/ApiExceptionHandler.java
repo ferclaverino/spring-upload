@@ -1,4 +1,4 @@
-package com.api.web.controller;
+package com.api.web.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.api.persistence.model.StorageException;
-import com.api.web.model.ErrorDTO;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -21,8 +20,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   Logger logger = LoggerFactory.getLogger(ApiExceptionHandler.class);
 
   @ExceptionHandler({ StorageException.class })
-  protected ResponseEntity<Object> handleInternalServerError(RuntimeException ex, WebRequest request) {
+  protected ResponseEntity<Object> handleInternalServerError(StorageException ex, WebRequest request) {
     return handleExceptionInternal(ex, new ErrorDTO(ex), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+  }
+
+  @ExceptionHandler({ Exception.class })
+  public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
+    return handleExceptionInternal(ex, new ErrorDTO("Sorry, we are having unexpected issues"), new HttpHeaders(),
+        HttpStatus.INTERNAL_SERVER_ERROR, request);
   }
 
   @Override
