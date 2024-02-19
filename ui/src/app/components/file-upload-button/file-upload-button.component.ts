@@ -8,7 +8,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
   templateUrl: './file-upload-button.component.html',
   styleUrl: './file-upload-button.component.scss',
 })
-export class FileUploadComponent {
+export class FileUploadButtonComponent {
   areFilesSelected = false;
 
   @Output()
