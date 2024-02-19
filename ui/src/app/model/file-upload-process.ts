@@ -4,19 +4,19 @@ import {
   HttpEventType,
 } from '@angular/common/http';
 
-export enum UploadStatus {
+export enum FileUploadStatus {
   PENDING,
   UPLOADING,
   SUCCEDED,
   FAILED,
 }
 
-export class UploadProcess {
-  private _status = UploadStatus.PENDING;
+export class FileUploadProcess {
+  private _status = FileUploadStatus.PENDING;
   private _progress = 0;
   private _errorMessage = '';
 
-  get status(): UploadStatus {
+  get status(): FileUploadStatus {
     return this._status;
   }
 
@@ -29,16 +29,16 @@ export class UploadProcess {
   }
 
   start() {
-    this._status = UploadStatus.UPLOADING;
+    this._status = FileUploadStatus.UPLOADING;
     this._progress = 0;
   }
 
   success() {
-    this._status = UploadStatus.SUCCEDED;
+    this._status = FileUploadStatus.SUCCEDED;
   }
 
   fail(errorResponse: HttpErrorResponse) {
-    this._status = UploadStatus.FAILED;
+    this._status = FileUploadStatus.FAILED;
     if (errorResponse.error?.detail) {
       // spring web errors
       this._errorMessage = errorResponse.error.detail;

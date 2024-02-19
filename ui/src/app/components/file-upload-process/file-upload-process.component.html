@@ -1,0 +1,9 @@
+<div *ngIf="fileUploadProcess.status === FileUploadStatus.UPLOADING">
+  {{ fileUploadProcess.progress }}
+</div>
+<div *ngIf="fileUploadProcess.status === FileUploadStatus.SUCCEDED">
+  upload completed!
+</div>
+<div *ngIf="fileUploadProcess.status === FileUploadStatus.FAILED">
+  Sorry, can´t upload file: {{ fileUploadProcess.errorMessage }}
+</div>

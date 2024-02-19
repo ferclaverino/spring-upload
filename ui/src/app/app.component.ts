@@ -9,24 +9,28 @@ import {
   HttpEventType,
 } from '@angular/common/http';
 import { tap } from 'rxjs';
-import { UploadProcess, UploadStatus } from './model/upload-process';
+import {
+  FileUploadProcess,
+  FileUploadStatus,
+} from './model/file-upload-process';
+import { FileUploadProcessComponent } from './components/file-upload-process/file-upload-process.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FileUploadComponent, CommonModule],
+  imports: [FileUploadComponent, FileUploadProcessComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   private readonly destroyRef = inject(DestroyRef);
 
-  readonly uploadProcess = new UploadProcess();
-  readonly UploadStatus = UploadStatus;
+  uploadProcess = new FileUploadProcess();
 
   constructor(private readonly fileUploadService: FileUploadService) {}
 
   filesSelected(files: FileList) {
+    this.uploadProcess = new FileUploadProcess();
     this.fileUploadService
       .upload(files[0])
       .pipe(
