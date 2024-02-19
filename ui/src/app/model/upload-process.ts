@@ -39,11 +39,17 @@ export class UploadProcess {
 
   fail(errorResponse: HttpErrorResponse) {
     this._status = UploadStatus.FAILED;
-    if (errorResponse.error.detail) {
+    if (errorResponse.error?.detail) {
+      // spring web errors
       this._errorMessage = errorResponse.error.detail;
-    } else if (errorResponse.error.message) {
+    } else if (errorResponse.error?.message) {
+      // api errors
       this._errorMessage = errorResponse.error.message;
+    } else if (errorResponse.error?.error) {
+      // spring security errors
+      this._errorMessage = errorResponse.error.error;
     } else {
+      // other errors
       this._errorMessage = errorResponse.error;
     }
   }

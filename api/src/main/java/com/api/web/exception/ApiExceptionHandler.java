@@ -31,8 +31,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @Override
-  protected ResponseEntity<Object> handleExceptionInternal(
-      Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
+  protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers,
+      HttpStatusCode statusCode, WebRequest request) {
+    // Log handled erros, so there is more information for diagnosis
     if (statusCode.is5xxServerError()) {
       logger.error("An exception occured, which will cause a {} response", statusCode, ex);
     } else if (statusCode.is4xxClientError()) {
