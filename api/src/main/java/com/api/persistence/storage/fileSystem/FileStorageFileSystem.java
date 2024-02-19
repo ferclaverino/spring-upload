@@ -27,7 +27,7 @@ public class FileStorageFileSystem implements FileStorage {
 	}
 
 	@Override
-	public void save(MultipartFile file) throws StorageException {
+	public void save(MultipartFile file) {
 		Path destinationFile = this.location.resolve(
 				Paths.get(file.getOriginalFilename()))
 				.normalize().toAbsolutePath();

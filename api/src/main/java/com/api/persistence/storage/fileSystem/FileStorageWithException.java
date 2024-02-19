@@ -12,7 +12,7 @@ import com.api.persistence.storage.FileStorage;
 public class FileStorageWithException implements FileStorage {
 
 	@Override
-	public void save(MultipartFile file) throws StorageException {
+	public void save(MultipartFile file) {
 		throw new StorageException("Can't save file, storage is out");
 	}
 
