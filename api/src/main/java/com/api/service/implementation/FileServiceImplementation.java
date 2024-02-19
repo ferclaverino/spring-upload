@@ -9,13 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.api.persistence.storage.FileStorage;
 import com.api.service.FileService;
-import com.api.web.exception.ApiExceptionHandler;
 
 @Service
 @Profile("!unsupported-exception")
 public class FileServiceImplementation implements FileService {
 
-  Logger logger = LoggerFactory.getLogger(ApiExceptionHandler.class);
+  Logger logger = LoggerFactory.getLogger(FileServiceImplementation.class);
 
   @Autowired
   private FileStorage fileStorage;
