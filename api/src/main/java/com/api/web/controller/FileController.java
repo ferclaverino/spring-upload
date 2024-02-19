@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.api.persistence.storage.FileStorage;
+import com.api.service.FileService;
 
 @RestController
 @RequestMapping("/files")
 public class FileController {
 
 	@Autowired
-	private FileStorage fileStorage;
+	private FileService fileService;
 
 	@PostMapping("/upload")
 	public ResponseEntity<Void> upload(@RequestParam("file") MultipartFile file) {
-		this.fileStorage.save(file);
+		this.fileService.save(file);
 		return ResponseEntity.noContent().build();
 	}
 

@@ -43,7 +43,7 @@ export class AppComponent {
         },
         error: (errorResponse: HttpErrorResponse) => {
           this.uploadProcess.fail(errorResponse);
-          console.log(errorResponse);
+          console.log(errorResponse, this.uploadProcess);
         },
       });
   }
