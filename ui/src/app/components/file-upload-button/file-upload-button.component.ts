@@ -9,16 +9,16 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrl: './file-upload-button.component.scss',
 })
 export class FileUploadButtonComponent {
-  areFilesSelected = false;
+  selected = false;
 
   @Output()
-  filesSelected = new EventEmitter<FileList>();
+  fileSelected = new EventEmitter<File>();
 
-  onFilesSelected(event: Event) {
+  onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;
     if (!target.files?.length) return;
 
-    this.areFilesSelected = true;
-    this.filesSelected.emit(target.files);
+    this.selected = true;
+    this.fileSelected.emit(target.files[0]);
   }
 }

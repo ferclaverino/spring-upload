@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FileUploadProcess } from '../../model/file-upload-process';
-import { tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   HttpErrorResponse,
@@ -24,16 +24,19 @@ import { CommonModule } from '@angular/common';
   styleUrl: './file-upload.component.scss',
 })
 export class FileUploadComponent {
+  private _files = new Subject<File>();
+  uploadProccesses!: Observable<FileUploadProcess>;
+
   private readonly destroyRef = inject(DestroyRef);
 
   uploadProcess = new FileUploadProcess();
 
   constructor(private readonly fileUploadService: FileUploadService) {}
 
-  filesSelected(files: FileList) {
+  fileSelected(file: File) {
     this.uploadProcess = new FileUploadProcess();
     this.fileUploadService
-      .upload(files[0])
+      .upload(file)
       .pipe(
         tap(() => this.uploadProcess.start()),
         takeUntilDestroyed(this.destroyRef),

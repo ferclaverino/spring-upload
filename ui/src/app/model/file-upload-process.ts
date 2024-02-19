@@ -57,4 +57,16 @@ export class FileUploadProcess {
       this._progress = Math.round(100 * (event.loaded / event.total));
     }
   }
+
+  static createWithProgress(event: HttpEvent<void>): FileUploadProcess {
+    const process = new FileUploadProcess();
+    process.updateProgress(event);
+    return process;
+  }
+
+  static createWithSucceded(): FileUploadProcess {
+    const process = new FileUploadProcess();
+    process.success();
+    return process;
+  }
 }
