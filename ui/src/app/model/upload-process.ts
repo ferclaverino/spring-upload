@@ -45,9 +45,6 @@ export class UploadProcess {
     } else if (errorResponse.error?.message) {
       // api errors
       this._errorMessage = errorResponse.error.message;
-    } else if (errorResponse.error?.error) {
-      // spring security errors
-      this._errorMessage = errorResponse.error.error;
     } else {
       // other errors
       this._errorMessage = errorResponse.error;
