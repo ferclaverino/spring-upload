@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { FileUploadComponent } from './components/file-upload-button/file-upload-button.component';
 import { FileUploadService } from './services/file-upload.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
@@ -26,9 +26,9 @@ export class AppComponent {
 
   constructor(private readonly fileUploadService: FileUploadService) {}
 
-  fileSelected(file: File) {
+  filesSelected(files: FileList) {
     this.fileUploadService
-      .upload(file)
+      .upload(files[0])
       .pipe(
         tap(() => this.uploadProcess.start()),
         takeUntilDestroyed(this.destroyRef),

@@ -1,0 +1,6 @@
+<input type="file" multiple (change)="onFilesSelected($event)" #fileInput />
+
+<div>
+  <span *ngIf="!areFilesSelected">select file </span>
+  <button (click)="fileInput.click()">upload</button>
+</div>

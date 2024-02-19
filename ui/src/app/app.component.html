@@ -1,4 +1,4 @@
-<app-file-upload (fileSelected)="fileSelected($event)" />
+<app-file-upload-button (filesSelected)="filesSelected($event)" />
 <div *ngIf="uploadProcess.status === UploadStatus.UPLOADING">
   {{ uploadProcess.progress }}
 </div>

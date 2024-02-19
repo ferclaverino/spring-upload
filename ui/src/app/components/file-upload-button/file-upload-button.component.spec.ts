@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FileUploadComponent } from './file-upload.component';
+import { FileUploadComponent } from './file-upload-button.component';
 
 describe('FileUploadComponent', () => {
   let component: FileUploadComponent;
@@ -8,10 +8,9 @@ describe('FileUploadComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FileUploadComponent]
-    })
-    .compileComponents();
-    
+      imports: [FileUploadComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(FileUploadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
