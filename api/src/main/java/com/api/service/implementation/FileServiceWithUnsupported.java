@@ -8,7 +8,7 @@ import com.api.service.FileService;
 
 @Service
 @Profile("unsupported-exception")
-public class FileServiceUnsupported implements FileService {
+public class FileServiceWithUnsupported implements FileService {
 
   @Override
   public void save(MultipartFile file) {
