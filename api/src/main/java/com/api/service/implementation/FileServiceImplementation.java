@@ -23,13 +23,23 @@ public class FileServiceImplementation implements FileService {
   @Override
   public void save(MultipartFile file) {
     this.logInfo("starts", file);
-    this.fileStorage.save(file);
-    this.logInfo("finishs", file);
-
+    try {
+      this.fileStorage.save(file);
+      this.logInfo("finishs", file);
+    } catch (RuntimeException exception) {
+      this.logInfo("finishs", file, exception);
+      throw exception;
+    }
   }
 
   private void logInfo(String action, MultipartFile file) {
     logger.info("User {} file upload: '{}' (size: {} kb).", action, file.getOriginalFilename(), file.getSize() / 1024);
+  }
+
+  private void logInfo(String action, MultipartFile file, RuntimeException exception) {
+    logger.info("User {} file upload with error: '{}', file upload: '{}' (size: {} kb).", action,
+        exception.getMessage(),
+        file.getOriginalFilename(), file.getSize() / 1024);
   }
 
 }
