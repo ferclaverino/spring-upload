@@ -47,7 +47,7 @@ export class UploadProcess {
       this._errorMessage = errorResponse.error.message;
     } else {
       // other errors
-      this._errorMessage = errorResponse.error;
+      this._errorMessage = 'We are having unexpected issues';
     }
   }
 
