@@ -30,6 +30,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus.INTERNAL_SERVER_ERROR, request);
   }
 
+  @SuppressWarnings("null")
   @Override
   protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers,
       HttpStatusCode statusCode, WebRequest request) {
