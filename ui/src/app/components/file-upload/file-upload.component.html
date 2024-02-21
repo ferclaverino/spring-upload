@@ -1,5 +1,5 @@
-<app-file-upload-button (fileSelected)="fileSelected($event)" />
+<app-file-upload-button (filesSelected)="filesSelected($event)" />
 <app-file-upload-process
-  *ngIf="uploadProcess"
-  [fileUploadProcess]="uploadProcess"
+  *ngFor="let process of processes"
+  [fileUploadProcess]="process"
 />

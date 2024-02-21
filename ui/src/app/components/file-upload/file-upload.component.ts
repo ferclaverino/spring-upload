@@ -29,30 +29,35 @@ export class FileUploadComponent {
 
   private readonly destroyRef = inject(DestroyRef);
 
-  uploadProcess = new FileUploadProcess();
+  processes: FileUploadProcess[] = [];
 
   constructor(private readonly fileUploadService: FileUploadService) {}
 
-  fileSelected(file: File) {
-    this.uploadProcess = new FileUploadProcess();
+  filesSelected(files: File[]) {
+    this.processes = files.map((file) => this.startUpload(file));
+  }
+
+  private startUpload(file: File): FileUploadProcess {
+    const uploadProcess = new FileUploadProcess();
     this.fileUploadService
       .upload(file)
       .pipe(
-        tap(() => this.uploadProcess.start()),
+        tap(() => uploadProcess.start()),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         next: (event: HttpEvent<void>) => {
           if (event.type == HttpEventType.UploadProgress) {
-            this.uploadProcess.updateProgress(event);
+            uploadProcess.updateProgress(event);
           } else {
-            this.uploadProcess.success();
+            uploadProcess.success();
           }
         },
         error: (errorResponse: HttpErrorResponse) => {
-          this.uploadProcess.fail(errorResponse);
-          console.log(errorResponse, this.uploadProcess);
+          uploadProcess.fail(errorResponse);
+          console.log(errorResponse, uploadProcess);
         },
       });
+    return uploadProcess;
   }
 }

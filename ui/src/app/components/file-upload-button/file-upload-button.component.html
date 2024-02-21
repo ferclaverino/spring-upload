@@ -1,4 +1,4 @@
-<input type="file" (change)="onFileSelected($event)" #fileInput />
+<input type="file" multiple (change)="onFileSelected($event)" #fileInput />
 
 <div>
   <span *ngIf="!selected">select file </span>

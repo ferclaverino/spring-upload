@@ -12,13 +12,17 @@ export class FileUploadButtonComponent {
   selected = false;
 
   @Output()
-  fileSelected = new EventEmitter<File>();
+  filesSelected = new EventEmitter<File[]>();
 
   onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;
     if (!target.files?.length) return;
 
     this.selected = true;
-    this.fileSelected.emit(target.files[0]);
+    const files: File[] = [];
+    for (let i = 0; i < target.files.length; i++) {
+      files.push(target.files[i]);
+    }
+    this.filesSelected.emit(files);
   }
 }
