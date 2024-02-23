@@ -20,9 +20,6 @@ public class FileServiceImplementation implements FileService {
   @Autowired
   private FileStorage fileStorage;
 
-  @Autowired
-  private AuthenticationService authenticationService;
-
   @Override
   public void save(MultipartFile file) {
     // Log when upload starts, finish and finish with error to understood what is
@@ -38,14 +35,12 @@ public class FileServiceImplementation implements FileService {
   }
 
   private void logInfo(String action, MultipartFile file) {
-    String username = authenticationService.getAuthentication().getName();
-    logger.info("User '{}' {} file upload: '{}' (size: {} kb).", username, action, file.getOriginalFilename(),
+    logger.info("FilseService {} file upload: '{}' (size: {} kb).", action, file.getOriginalFilename(),
         file.getSize() / 1024);
   }
 
   private void logInfo(String action, MultipartFile file, RuntimeException exception) {
-    String username = authenticationService.getAuthentication().getName();
-    logger.info("User '{}' {} file upload with error: '{}', file upload: '{}' (size: {} kb).", username, action,
+    logger.info("FilseService {} file upload with error: '{}', file upload: '{}' (size: {} kb).", action,
         exception.getMessage(),
         file.getOriginalFilename(), file.getSize() / 1024);
   }
