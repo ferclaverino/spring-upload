@@ -13,8 +13,8 @@ import { FileUploadProcessComponent } from '../file-upload-process/file-upload-p
 import { CommonModule } from '@angular/common';
 
 // Smart component for file upload
-// This component is a composition of 2 presentational components: upload button and upload process (S of solid)
-// It is responsible coordinate them and make api calls (that is why is called smart)
+// This component is made on a composition of 2 presentational components: upload button and upload process (S of solid)
+// It is responsible to coordinate them and make api calls (that is why is called smart)
 @Component({
   selector: 'app-file-upload',
   standalone: true,
