@@ -20,13 +20,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   private static final String EXCEPTION_MESSAGE = "An exception occured, which will cause a {} response";
   private Logger logger = LoggerFactory.getLogger(ApiExceptionHandler.class);
 
+  // An storage exception maps to INTERNAL_SERVER_ERROR
+  // and returns ErrorDTO as response
   @ExceptionHandler({ StorageException.class })
   protected ResponseEntity<Object> handleInternalServerError(StorageException ex, WebRequest request) {
     return handleExceptionInternal(ex, new ErrorDTO(ex), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
   }
 
-  @ExceptionHandler({ Exception.class })
-  public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
+  // Other runtime exceptions map to INTERNAL_SERVER_ERROR
+  // and returns ErrorDTO as response with a message.
+  // Exception message is not returned to avoid exposing sensitive information
+  @ExceptionHandler({ RuntimeException.class })
+  public ResponseEntity<Object> handleAll(RuntimeException ex, WebRequest request) {
     return handleExceptionInternal(ex, new ErrorDTO("We are having unexpected issues"), new HttpHeaders(),
         HttpStatus.INTERNAL_SERVER_ERROR, request);
   }
