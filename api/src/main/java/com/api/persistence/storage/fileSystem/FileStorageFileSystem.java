@@ -28,6 +28,7 @@ public class FileStorageFileSystem implements FileStorage {
 
 	@Override
 	public void save(MultipartFile file) {
+		// Not taking in care file name collisions, this is just for demo purposess
 		Path destinationFile = this.location.resolve(
 				Paths.get(file.getOriginalFilename()))
 				.normalize().toAbsolutePath();
